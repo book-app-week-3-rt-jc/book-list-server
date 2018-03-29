@@ -24,7 +24,7 @@ app.use(cors());
 
 app.get('/api/v1/books', (req,res) => {
   client.query(
-    'SELECT book_id, title, author, image_url, isbn FROM books;')
+    'SELECT * FROM books;')
     .then(results => res.send(results.rows))
     .catch(console.error);
 });
@@ -37,7 +37,7 @@ app.get('/api/v1/books/:id', (req, res) => {
     .catch(console.error);
 });
 
-app.post('/api/v1/books', (req, res) => {
+app.post('/api/v1/books/new/', (req, res) => {
   client.query(
     'INSERT INTO books (title, author, isbn, image_url, description) VALUES ($1,$2,$3, $4, $5)', 
     [
