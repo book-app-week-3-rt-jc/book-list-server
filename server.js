@@ -53,6 +53,30 @@ app.post('/api/v1/books/', (req, res) => {
     .catch(console.error);
 });
 
+app.delete('/api/v1/books/:id', (req, res) => {
+  client.query(
+    'DELETE FROM books WHERE books_id=$1',
+    [req.params.id])
+    .then(() => res.send('204 No Content'))
+    .catch(console.error);
+});
+
+app.put('/api/v1/books/:id', (req, res) => {
+  client.query(
+    `UPDATE books
+    SET title=$1, author=$2, isbn=$3, image_url=$4, desciption=$5 
+    WHERE book_id=$6`,
+    [
+      req.body.title,
+      req.body.author,
+      req.body.isbn,
+      req.body.image_url,
+      req.body.description,
+      req.params.id
+    ])
+    .then(() => res.send('200 OK'))
+    .catch(console.error);
+});
 
 
 //This app.get will need a lot more fleshing out once the database is operational
